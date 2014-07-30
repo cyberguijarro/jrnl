@@ -37,8 +37,7 @@ istream& operator>>(istream& stream, Entry& entry)
          {
             if (found)
             {
-               for ( size_t i = 0U; i < line.length() + 1; i++ )
-                  stream.unget();
+               entry.record_length = static_cast<size_t>(stoi(line));
                break;
             }
             else
@@ -57,7 +56,6 @@ ostream& operator<<(ostream& stream, const Entry& entry)
 {
    vector<string> lines = entry.split();
    string timestamp = "Timestamp: " + entry.timestamp;
-
 
    stream << timestamp << endl;
    stream << string(timestamp.length(), '=') << endl << endl;

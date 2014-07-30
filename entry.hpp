@@ -8,6 +8,7 @@ struct Entry
 {
    std::string timestamp;
    std::string lines;
+   size_t record_length;
 
    std::vector<std::string> split() const;
 };

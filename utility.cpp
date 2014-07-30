@@ -7,6 +7,8 @@
 
 using namespace std;
 
+const size_t record_marker_length = 10U;
+
 string filename()
 {
 	return string(getpwuid(getuid())->pw_dir) + "/.jrnl";
