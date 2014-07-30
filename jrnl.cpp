@@ -70,6 +70,19 @@ void log()
    }
 }
 
+void show(string timestamp)
+{
+   Traverser traverser;
+
+   while (!traverser.eof())
+   {
+      Entry entry = traverser.next();
+
+      if (entry.timestamp == timestamp)
+         cout << entry; 
+   }
+}
+
 int main(int argc, const char* argv[])
 {
    switch (argc)
@@ -87,6 +100,10 @@ int main(int argc, const char* argv[])
       if (string(argv[1]) == "search")
       {
          search(argv[2]);
+      }
+      else if (string(argv[1]) == "show")
+      {
+         show(argv[2]);
       }
       break;
    }
