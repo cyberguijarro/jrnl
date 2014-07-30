@@ -53,7 +53,7 @@ void search(string pattern)
    {
       Entry entry = traverser.next();
 
-      if (regex_match(entry.lines, regex))
+      if (regex_search(entry.lines, regex))
          cout << entry;
    }
 }
