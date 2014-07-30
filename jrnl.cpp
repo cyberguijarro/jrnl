@@ -46,14 +46,12 @@ void append()
 
 void search(string pattern)
 {
-   ifstream file(filename(), ios_base::in );
+   Traverser traverser;
    regex regex(pattern);
 
-   while (file)
+   while (!traverser.eof())
    {
-      Entry entry;
-
-      file >> entry;
+      Entry entry = traverser.next();
 
       if (regex_match(entry.lines, regex))
          cout << entry;
