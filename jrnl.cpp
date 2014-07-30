@@ -70,17 +70,23 @@ void log()
 
 int main(int argc, const char* argv[])
 {
-   if ( argc == 1 )
+   switch (argc)
    {
+   case 1:
       append();
-   }
-   else if (string(argv[1]) == "log")
-   {
-      log();
-   }
-   else
-   {
-      search(string(argv[1]));
+      break;
+   case 2:
+      if (string(argv[1]) == "log")
+      {
+         log();
+      }
+      break;
+   case 3:
+      if (string(argv[1]) == "search")
+      {
+         search(argv[2]);
+      }
+      break;
    }
 
    return 0;
