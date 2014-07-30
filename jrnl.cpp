@@ -83,6 +83,26 @@ void show(string timestamp)
    }
 }
 
+void tags()
+{
+   Traverser traverser;
+   regex regex("\\#([^ \n\t]*)");
+   smatch matches;
+
+   while (!traverser.eof())
+   {
+      Entry entry = traverser.next();
+
+      while (regex_search(entry.lines, matches, regex))
+      {
+         cout << matches[0] << " ";
+         entry.lines = matches.suffix().str(); 
+      }
+   }
+   
+   cout << endl;
+}
+
 int main(int argc, const char* argv[])
 {
    switch (argc)
@@ -94,6 +114,10 @@ int main(int argc, const char* argv[])
       if (string(argv[1]) == "log")
       {
          log();
+      }
+      else if (string(argv[1]) == "tags")
+      {
+         tags();
       }
       break;
    case 3:
