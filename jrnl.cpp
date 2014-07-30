@@ -64,7 +64,9 @@ void log()
 
    while (!traverser.eof())
    {
-      cout << traverser.next() << endl; 
+      Entry entry = traverser.next();
+
+      cout << "[" << entry.timestamp << "] " << entry.split().front() << endl; 
    }
 }
 
