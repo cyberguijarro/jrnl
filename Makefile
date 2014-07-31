@@ -1,4 +1,4 @@
-OBJECTS = jrnl.o entry.o utility.o traverser.o
+OBJECTS = $(subst .cpp,.o,$(wildcard *.cpp))
 CXXFLAGS = -c -O3 -Wall -std=c++0x 
 LIBS =
 TARGET = jrnl

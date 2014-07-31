@@ -1,150 +1,45 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-#include <fstream>
-#if defined(USE_BOOST_REGEX)
-#include <boost/regex.hpp>
-#else
-#include <regex>
-#endif
-#include <iomanip>
+#include <map>
 
-#include "entry.hpp"
-#include "utility.hpp"
-#include "traverser.hpp"
+#include "cmd-append.hpp"
+#include "cmd-search.hpp"
+#include "cmd-tags.hpp"
+#include "cmd-log.hpp"
+#include "cmd-show.hpp"
 
 using namespace std;
-#if defined(USE_BOOST_REGEX)
-using namespace boost;
-#endif
 
-void append()
-{
-   vector<string> lines(1U);
-   ofstream file(filename(), ios_base::out | ios_base::ate | ios_base::app);
-   string timestamp;
-   auto start = file.tellp();
+typedef map<string, function<void(const string&)>> mapping;
 
-   while (getline(cin, lines.back()))
-   {
-      lines.push_back(string());
-   }
-
-   file << (timestamp = now()) << endl;
-   
-   for_each(
-      lines.begin(),
-      lines.end(),
-      [] ( string& line ) { line.insert(line.begin(), 1, '\t'); }
-   );
-
-   copy(lines.begin(), lines.end(), ostream_iterator<string>(file, "\n"));
-   
-   file << setw(record_marker_length)
-      << setfill('0')
-      << file.tellp() - start
-      << endl;
-
-   cout << "New journal entry added (" << timestamp << ")." << endl;
-}
-
-void search(string pattern)
-{
-   Traverser traverser;
-   regex regex(pattern);
-
-   while (!traverser.eof())
-   {
-      Entry entry = traverser.next();
-
-      if (regex_search(entry.lines, regex))
-         cout << entry;
-   }
-}
-
-void log()
-{
-   Traverser traverser;
-
-   while (!traverser.eof())
-   {
-      Entry entry = traverser.next();
-
-      cout << "[" << entry.timestamp << "] " << entry.split().front() << endl; 
-   }
-}
-
-void show(string timestamp)
-{
-   Traverser traverser;
-
-   while (!traverser.eof())
-   {
-      Entry entry = traverser.next();
-
-      if (entry.timestamp == timestamp)
-         cout << entry; 
-   }
-}
-
-void tags()
-{
-   Traverser traverser;
-   regex regex("\\#([^ \n\t]*)");
-   smatch matches;
-
-   while (!traverser.eof())
-   {
-      Entry entry = traverser.next();
-
-      while (regex_search(entry.lines, matches, regex))
-      {
-         cout << matches[0] << " ";
-         entry.lines = matches.suffix().str(); 
-      }
-   }
-   
-   cout << endl;
-}
-
-void tag(string name)
-{
-   search(string("\\#") + name);
-}
+static const map<int, mapping> commands({
+   make_pair(
+      2,
+      mapping({
+         make_pair("log", [] (const string&) { log(); }),
+         make_pair("tags", [] (const string&) { tags(); }),
+      })
+   ),
+   make_pair(
+      3,
+      mapping({
+         make_pair("search", [] (const string& s) { search(s); }),
+         make_pair("show", [] (const string& s) { show(s); }),
+         make_pair("tag", [] (const string& s) { tag(s); }),
+      })
+   ),
+});
 
 int main(int argc, const char* argv[])
 {
-   switch (argc)
+   if (argc == 1)
    {
-   case 1:
       append();
-      break;
-   case 2:
-      if (string(argv[1]) == "log")
-      {
-         log();
-      }
-      else if (string(argv[1]) == "tags")
-      {
-         tags();
-      }
-      break;
-   case 3:
-      if (string(argv[1]) == "search")
-      {
-         search(argv[2]);
-      }
-      else if (string(argv[1]) == "show")
-      {
-         show(argv[2]);
-      }
-      else if (string(argv[1]) == "tag")
-      {
-         tag(argv[2]);
-      }
-      break;
+   }
+   else if(
+      (commands.find(argc) != commands.end())
+      && (commands.at(argc).find(argv[1]) != commands.at(argc).end())
+   )
+   {
+      commands.at(argc).at(argv[1])(argc >= 3 ? argv[2] : "");
    }
 
    return 0;
