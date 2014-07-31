@@ -20,6 +20,7 @@ static const map<int, mapping> commands({
          make_pair("tags", [] (const string&) { tags(); }),
          make_pair("pop", [] (const string&) { pop(); }),
          make_pair("ammend", [] (const string&) { ammend(); }),
+         make_pair("longform", [] (const string&) { append(true); }),
       })
    ),
    make_pair(

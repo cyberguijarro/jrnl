@@ -1,3 +1,3 @@
 #pragma once
 
-void append();
+void append(bool external = false);

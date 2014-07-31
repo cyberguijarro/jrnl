@@ -28,10 +28,10 @@ void ammend()
       
       do lines.emplace_back(); while (getline(file, lines.back()));
 
-      remove(temporary.c_str());
-
       journal.reset();
       journal.pop();
       journal.push(trim_lines(lines));
    }
+   
+   remove(temporary.c_str());
 }
