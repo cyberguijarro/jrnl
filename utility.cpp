@@ -1,6 +1,7 @@
 #include "utility.hpp"
 
 #include <chrono>
+#include <functional>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -11,13 +12,23 @@ const size_t record_marker_length = 10U;
 
 string filename()
 {
-	return string(getpwuid(getuid())->pw_dir) + "/.jrnl";
+    return string(getpwuid(getuid())->pw_dir) + "/.jrnl";
 }
 
 string now()
 {
-   time_t t = chrono::system_clock::to_time_t(chrono::system_clock::now());
-   string result(ctime(&t));
+    time_t t = chrono::system_clock::to_time_t(chrono::system_clock::now());
+    string result(ctime(&t));
 
-   return result.substr(0, result.length() - 1);
+    return result.substr(0, result.length() - 1);
+}
+
+vector<string> trim_lines(const vector<string>& lines)
+{
+    static const auto empty = [] (const string& s) { return s.empty(); };
+
+    return vector<string>(
+        find_if_not(lines.begin(), lines.end(), empty),
+        find_if_not(lines.rbegin(), lines.rend(), empty).base()
+    ); 
 }

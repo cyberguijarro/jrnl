@@ -6,6 +6,7 @@
 
 #include "journal.hpp"
 #include "entry.hpp"
+#include "utility.hpp"
 
 using namespace std;
 
@@ -26,11 +27,10 @@ void ammend()
    lines.clear();
    
    do lines.emplace_back(); while (getline(file, lines.back()));
-   lines.pop_back();
 
    remove(temporary.c_str());
 
    journal.reset();
    journal.pop();
-   journal.push(lines);
+   journal.push(trim_lines(lines));
 }

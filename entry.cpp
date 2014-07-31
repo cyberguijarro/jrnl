@@ -8,13 +8,16 @@ using namespace std;
 vector<string> Entry::split() const
 {
    istringstream stream(lines);
-   vector<string> result( 1U );
+   vector<string> result;
 
-   while ( getline(stream, result.back() ))
-   {
-      result.back().erase(result.back().begin());
-      result.emplace_back();
-   }
+   do result.emplace_back(); while (getline(stream, result.back()));
+   result.pop_back();
+
+   for_each(
+      result.begin(),
+      result.end(),
+      [] (string& s) { s.erase(s.begin()); }
+   );
 
    return result;
 }
