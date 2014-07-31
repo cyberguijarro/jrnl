@@ -21,16 +21,17 @@ void ammend()
    copy(lines.begin(), lines.end(), ostream_iterator<string>(file, "\n"));
    file.close();
 
-   system(("$EDITOR " + temporary).c_str());
-   
-   file.open(temporary, ios_base::in);
-   lines.clear();
-   
-   do lines.emplace_back(); while (getline(file, lines.back()));
+   if (edit(temporary))
+   {
+      file.open(temporary, ios_base::in);
+      lines.clear();
+      
+      do lines.emplace_back(); while (getline(file, lines.back()));
 
-   remove(temporary.c_str());
+      remove(temporary.c_str());
 
-   journal.reset();
-   journal.pop();
-   journal.push(trim_lines(lines));
+      journal.reset();
+      journal.pop();
+      journal.push(trim_lines(lines));
+   }
 }

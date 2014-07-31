@@ -2,6 +2,8 @@
 
 #include <chrono>
 #include <functional>
+#include <cstdlib>
+#include <iostream>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -31,4 +33,19 @@ vector<string> trim_lines(const vector<string>& lines)
         find_if_not(lines.begin(), lines.end(), empty),
         find_if_not(lines.rbegin(), lines.rend(), empty).base()
     ); 
+}
+
+bool edit(const string& filename)
+{
+    bool result = true;
+
+    if (getenv("EDITOR") != NULL)
+        system(("$EDITOR " + filename).c_str());
+    else
+    {
+        cerr << "No $EDITOR environment variable found." << endl;
+        result = false;
+    }
+
+    return result;
 }
