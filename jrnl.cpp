@@ -4,7 +4,11 @@
 #include <iterator>
 #include <algorithm>
 #include <fstream>
+#if defined(USE_BOOST_REGEX)
+#include <boost/regex.hpp>
+#else
 #include <regex>
+#endif
 #include <iomanip>
 
 #include "entry.hpp"
@@ -12,7 +16,9 @@
 #include "traverser.hpp"
 
 using namespace std;
-
+#if defined(USE_BOOST_REGEX)
+using namespace boost;
+#endif
 
 void append()
 {
