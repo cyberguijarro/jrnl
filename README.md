@@ -1,6 +1,6 @@
 # jrnl
 
-jrnl is a command line tool aiming fast and effortles maintenance of an activity journal. jrnl features:
+jrnl is a command line tool built for fast and effortles maintenance of an activity journal. jrnl features:
 
  * Fast and portable implementation (C++11, no mandatory dependencies)
  * git-style commands
@@ -30,6 +30,7 @@ jrnl stores your journal entries in one single text file (`~/.jrnl`) with the fo
     ...
     <tab><entry line n>
     <entry length in bytes>
+    ...
 
 The last field allows fast backwards traversal, while keeping append operations also efficient (each new entry is added to the end of the file).
 
@@ -39,7 +40,7 @@ To add a new journal entry just type:
 
     jrnl
 
-then write as many lines as you want, then hit `ctrl-d` to finish your entry. If you prefer to write in your text editor of choice, make sure your `EDITOR` environment variable is set, then run:
+write as many lines as you want, then hit `ctrl-d` to finish your entry. If you prefer to write in your text editor of choice, make sure your `EDITOR` environment variable is set, then run:
 
     jrnl longform
 
@@ -63,7 +64,7 @@ Also, you can display all entries matching a particular search string:
 
     jrnl search "my great project"
 
-And even throw in regular expressions now that you are at it:
+And even throw in regular expressions (http://en.cppreference.com/w/cpp/regex/ecmascript) now that you are at it:
 
     jrnl search "my.*project"
 
