@@ -1,16 +1,16 @@
-#include "traverser.hpp"
+#include "journal.hpp"
 
 #include "utility.hpp"
 
 using namespace std;
 
-Traverser::Traverser() : file(filename(), ios_base::in)
+Journal::Journal() : file(filename(), ios_base::in)
 {
    file.seekg(0, ios_base::end);
    position = file.tellg();
 }
 
-Entry Traverser::next()
+Entry Journal::next()
 {
    off_t record_length;
    Entry entry;
@@ -31,7 +31,7 @@ Entry Traverser::next()
    return entry;
 }
 
-bool Traverser::eof()
+bool Journal::eof()
 {
    return (position == 0);
 }

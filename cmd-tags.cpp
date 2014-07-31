@@ -6,7 +6,7 @@
 #include <regex>
 #endif
 
-#include "traverser.hpp"
+#include "journal.hpp"
 #include "cmd-search.hpp"
 
 using namespace std;
@@ -16,13 +16,13 @@ using namespace boost;
 
 void tags()
 {
-   Traverser traverser;
+   Journal journal;
    regex regex("\\#([^ \n\t]*)");
    smatch matches;
 
-   while (!traverser.eof())
+   while (!journal.eof())
    {
-      Entry entry = traverser.next();
+      Entry entry = journal.next();
 
       while (regex_search(entry.lines, matches, regex))
       {

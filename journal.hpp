@@ -5,14 +5,14 @@
 
 #include "entry.hpp"
 
-class Traverser
+class Journal 
 {
 private:
    off_t position;
    std::ifstream file;
 
 public:
-   Traverser();
+   Journal();
 
    Entry next();
    bool eof();

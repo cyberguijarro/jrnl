@@ -1,16 +1,16 @@
 #include "cmd-show.hpp"
 
-#include "traverser.hpp"
+#include "journal.hpp"
 
 using namespace std;
 
 void show(const string& timestamp)
 {
-   Traverser traverser;
+   Journal journal;
 
-   while (!traverser.eof())
+   while (!journal.eof())
    {
-      Entry entry = traverser.next();
+      Entry entry = journal.next();
 
       if (entry.timestamp == timestamp)
          cout << entry; 

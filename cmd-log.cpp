@@ -2,17 +2,17 @@
 
 #include <iostream>
 
-#include "traverser.hpp"
+#include "journal.hpp"
 
 using namespace std;
 
 void log()
 {
-   Traverser traverser;
+   Journal journal;
 
-   while (!traverser.eof())
+   while (!journal.eof())
    {
-      Entry entry = traverser.next();
+      Entry entry = journal.next();
 
       cout << "[" << entry.timestamp << "] " << entry.split().front() << endl; 
    }

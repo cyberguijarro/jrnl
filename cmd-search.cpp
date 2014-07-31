@@ -6,7 +6,7 @@
 #include <regex>
 #endif
 
-#include "traverser.hpp"
+#include "journal.hpp"
 
 using namespace std;
 #if defined(USE_BOOST_REGEX)
@@ -15,12 +15,12 @@ using namespace boost;
 
 void search(const string& pattern)
 {
-   Traverser traverser;
+   Journal journal;
    regex regex(pattern);
 
-   while (!traverser.eof())
+   while (!journal.eof())
    {
-      Entry entry = traverser.next();
+      Entry entry = journal.next();
 
       if (regex_search(entry.lines, regex))
          cout << entry;
