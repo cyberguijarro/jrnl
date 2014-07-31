@@ -1,10 +1,16 @@
 #include "journal.hpp"
 
+#include <algorithm>
+#include <iomanip>
+
 #include "utility.hpp"
 
 using namespace std;
 
-Journal::Journal() : file(filename(), ios_base::in)
+Journal::Journal(bool write) : file(
+   filename(),
+   write ? (ios_base::out | ios_base::ate | ios_base::app) : ios_base::in
+)
 {
    file.seekg(0, ios_base::end);
    position = file.tellg();
@@ -34,4 +40,30 @@ Entry Journal::next()
 bool Journal::eof()
 {
    return (position == 0);
+}
+
+void Journal::push(const vector<string>& lines)
+{
+   auto start = file.tellp();
+   vector<string> formatted_lines;
+
+   file << now() << endl;
+   
+   transform(
+      lines.begin(),
+      lines.end(),
+      back_inserter<vector<string>>(formatted_lines),
+      [] ( const string& l ) { return '\t' + l; }
+   );
+
+   copy(
+      formatted_lines.begin(),
+      formatted_lines.end(),
+      ostream_iterator<string>(file, "\n")
+   );
+   
+   file << setw(record_marker_length)
+      << setfill('0')
+      << file.tellp() - start
+      << endl;
 }
