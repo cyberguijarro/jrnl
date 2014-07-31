@@ -85,3 +85,14 @@ void Journal::pop()
    file.seekg(0, ios_base::end);
    position = file.tellg();
 }
+
+void Journal::reset()
+{
+   file.close();
+   file.open(
+      filename(),
+      ios_base::in | ios_base::out | ios_base::ate | ios_base::app
+   );
+   file.seekg(0, ios_base::end);
+   position = file.tellg();
+}

@@ -6,6 +6,7 @@
 #include "cmd-log.hpp"
 #include "cmd-show.hpp"
 #include "cmd-pop.hpp"
+#include "cmd-ammend.hpp"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ static const map<int, mapping> commands({
          make_pair("log", [] (const string&) { log(); }),
          make_pair("tags", [] (const string&) { tags(); }),
          make_pair("pop", [] (const string&) { pop(); }),
+         make_pair("ammend", [] (const string&) { ammend(); }),
       })
    ),
    make_pair(
