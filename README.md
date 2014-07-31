@@ -2,7 +2,7 @@
 
 jrnl is a command line tool aiming fast and effortles maintenance of an activity journal. jrnl features:
 
- * Fast and portable implementation (C++11, few or no dependencies)
+ * Fast and portable implementation (C++11, no mandatory dependencies)
  * git-style commands
  * Efficient storage in plain text, human readable format (human writable not so much)
 
