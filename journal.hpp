@@ -19,4 +19,5 @@ public:
    Entry next();
    bool eof();
    void push(const std::vector<std::string>& lines);
+   void pop();
 };

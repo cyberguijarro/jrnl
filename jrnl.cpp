@@ -5,6 +5,7 @@
 #include "cmd-tags.hpp"
 #include "cmd-log.hpp"
 #include "cmd-show.hpp"
+#include "cmd-pop.hpp"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ static const map<int, mapping> commands({
       mapping({
          make_pair("log", [] (const string&) { log(); }),
          make_pair("tags", [] (const string&) { tags(); }),
+         make_pair("pop", [] (const string&) { pop(); }),
       })
    ),
    make_pair(

@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <iomanip>
+#include <unistd.h>
 
 #include "utility.hpp"
 
@@ -9,7 +10,7 @@ using namespace std;
 
 Journal::Journal(bool write) : file(
    filename(),
-   write ? (ios_base::out | ios_base::ate | ios_base::app) : ios_base::in
+   ios_base::in | ios_base::out | ios_base::ate | ios_base::app
 )
 {
    file.seekg(0, ios_base::end);
@@ -66,4 +67,21 @@ void Journal::push(const vector<string>& lines)
       << setfill('0')
       << file.tellp() - start
       << endl;
+
+   position = file.tellp();
+}
+
+void Journal::pop()
+{
+   next();
+   file.close();
+
+   truncate(filename().c_str(), position);
+
+   file.open(
+      filename(),
+      ios_base::in | ios_base::out | ios_base::ate | ios_base::app
+   );
+   file.seekg(0, ios_base::end);
+   position = file.tellg();
 }
