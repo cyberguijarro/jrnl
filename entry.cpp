@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <iterator>
+#include <algorithm>
 
 using namespace std;
 
