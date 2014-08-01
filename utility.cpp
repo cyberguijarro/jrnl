@@ -4,6 +4,7 @@
 #include <functional>
 #include <cstdlib>
 #include <iostream>
+#include <algorithm>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -40,7 +41,10 @@ bool edit(const string& filename)
     bool result = true;
 
     if (getenv("EDITOR") != NULL)
-        system(("$EDITOR " + filename).c_str());
+    {
+        if (system(("$EDITOR " + filename).c_str()))
+            ;
+    }
     else
     {
         cerr << "No $EDITOR environment variable found." << endl;

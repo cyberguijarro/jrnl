@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <iomanip>
+#include <iterator>
 #include <unistd.h>
 
 #include "utility.hpp"
@@ -76,7 +77,8 @@ void Journal::pop()
    next();
    file.close();
 
-   truncate(filename().c_str(), position);
+   if (truncate(filename().c_str(), position))
+      ;
 
    file.open(
       filename(),

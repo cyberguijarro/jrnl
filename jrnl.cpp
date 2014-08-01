@@ -1,4 +1,5 @@
 #include <map>
+#include <functional>
 
 #include "cmd-append.hpp"
 #include "cmd-search.hpp"
