@@ -3,7 +3,7 @@
 jrnl is a command line tool built for fast and effortles maintenance of an activity journal. jrnl features:
 
  * Fast and portable implementation (C++11, no mandatory dependencies)
- * git-style commands
+ * Git-style commands
  * Efficient storage in plain text, human readable format (human writable not so much)
 
 ## Building
@@ -22,7 +22,7 @@ If your compiler's STL implementation has lacky or missing std::regex support, y
 
 ## File format
 
-jrnl stores your journal entries in one single text file (`~/.jrnl`) with the following structure:
+jrnl stores your journal entries in one single text file (`.jrnl`) with the following structure:
 
     <entry timestamp>
     <tab><entry line 1>
@@ -34,9 +34,17 @@ jrnl stores your journal entries in one single text file (`~/.jrnl`) with the fo
 
 The last field allows fast backwards traversal, while keeping append operations also efficient (each new entry is added to the end of the file).
 
+## File location
+
+You can have `.jrnl` files everywhere in your system. When running `jrnl`, the closest `.jrnl` file existing in your working directory or its parents will be chosen. If none is found, a global journal file (`~/.jrnl`) will be used.
+
 ## Command-line syntax
 
-To add a new journal entry just type:
+To create a journal in your current working directory, type:
+
+    jrnl init
+
+Then add a new journal entry:
 
     jrnl
 
@@ -80,3 +88,7 @@ Then list all available tags using:
 And display all entries containing a certain tag:
 
     jrnl tag awesomeness
+
+Finally, if you want to know which journal file will be used when running `jrnl` from your working directory, just run:
+
+    jrnl file
