@@ -15,7 +15,30 @@ const size_t record_marker_length = 10U;
 
 string filename()
 {
-    return string(getpwuid(getuid())->pw_dir) + "/.jrnl";
+    char* buffer = getcwd(NULL, 4096);
+    string directory = string(buffer) + "/", result;
+    bool found = false;
+    
+    free(buffer);
+
+    do
+    {
+        result = directory + ".jrnl";
+        found = (access(result.c_str(), R_OK) == 0);
+
+        if (directory == "/")
+            break;
+
+        directory.erase(directory.rfind("/", directory.length() - 2) + 1);
+    }
+    while (!found);
+
+    if (!found)
+    {
+        result = string(getpwuid(getuid())->pw_dir) + "/.jrnl";
+    }
+
+    return result;
 }
 
 string now()
