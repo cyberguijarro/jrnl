@@ -8,6 +8,7 @@
 #include "cmd-show.hpp"
 #include "cmd-pop.hpp"
 #include "cmd-ammend.hpp"
+#include "cmd-init.hpp"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ static const map<int, mapping> commands({
          make_pair("pop", [] (const string&) { pop(); }),
          make_pair("ammend", [] (const string&) { ammend(); }),
          make_pair("longform", [] (const string&) { append(true); }),
+         make_pair("init", [] (const string&) { init(); }),
       })
    ),
    make_pair(
