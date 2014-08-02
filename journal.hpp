@@ -14,7 +14,7 @@ private:
    std::fstream file;
 
 public:
-   Journal(bool write = false);
+   Journal(const std::string& path = std::string());
 
    Entry next();
    bool eof();

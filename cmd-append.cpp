@@ -34,5 +34,5 @@ void append(bool external)
       do lines.emplace_back(); while(getline(cin, lines.back()));
    }
 
-   Journal(true).push(trim_lines(lines));
+   Journal().push(trim_lines(lines));
 }

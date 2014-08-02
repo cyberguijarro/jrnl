@@ -9,8 +9,8 @@
 
 using namespace std;
 
-Journal::Journal(bool write) : file(
-   filename(),
+Journal::Journal(const string& path) : file(
+   path.empty() ? filename() : path,
    ios_base::in | ios_base::out | ios_base::ate | ios_base::app
 )
 {

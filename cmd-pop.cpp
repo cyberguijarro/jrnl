@@ -6,5 +6,5 @@ using namespace std;
 
 void pop()
 {
-   Journal(true).pop();
+   Journal().pop();
 }
