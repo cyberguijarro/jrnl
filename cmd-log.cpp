@@ -8,12 +8,11 @@ using namespace std;
 
 void log()
 {
-   Journal journal;
-
-   while (!journal.eof())
-   {
-      Entry entry = journal.next();
-
-      cout << "[" << entry.timestamp << "] " << entry.split().front() << endl; 
-   }
+   Journal().each(
+      [] (const Entry& entry) -> bool {
+         cout << "[" << entry.timestamp << "] ";
+         cout << entry.split().front() << endl; 
+         return true;
+      }
+   );
 }

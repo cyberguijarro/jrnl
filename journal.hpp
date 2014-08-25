@@ -1,23 +1,26 @@
 #pragma once
 
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+#include <functional>
 
 #include "entry.hpp"
 
 class Journal 
 {
 private:
-   off_t position;
    std::fstream file;
+   std::string path;
+
+   void open();
+   void close();
 
 public:
    Journal(const std::string& path = std::string());
 
-   Entry next();
-   bool eof();
+   void each(std::function<bool(const Entry&)> callback);
+   Entry back();
    void push(const std::vector<std::string>& lines);
    void pop();
    void reset();

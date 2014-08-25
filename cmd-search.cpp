@@ -15,14 +15,12 @@ using namespace boost;
 
 void search(const string& pattern)
 {
-   Journal journal;
    regex regex(pattern);
-
-   while (!journal.eof())
-   {
-      Entry entry = journal.next();
-
-      if (regex_search(entry.lines, regex))
-         cout << entry;
-   }
+   
+   Journal().each(
+      [&] (const Entry& entry) -> bool {
+         if (regex_search(entry.lines, regex)) cout << entry;
+         return true;
+      }
+   );
 }

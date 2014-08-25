@@ -16,22 +16,25 @@ using namespace boost;
 
 void tags()
 {
-   Journal journal;
    regex regex("\\#([^ \n\t]*)");
    smatch matches;
-
-   while (!journal.eof())
-   {
-      Entry entry = journal.next();
-
-      while (regex_search(entry.lines, matches, regex))
-      {
-         cout << matches[0] << " ";
-         entry.lines = matches.suffix().str(); 
-      }
-   }
+   int count = 0;
    
-   cout << endl;
+   Journal().each(
+      [&] (const Entry& entry) {
+         string lines = entry.lines;
+
+         while (regex_search(lines, matches, regex)) {
+            cout << matches[0] << " ";
+            lines = matches.suffix().str();
+            count++;
+         }
+
+         return true;
+      }
+   );
+
+   if (count > 0) cout << endl;
 }
 
 void tag(const string& name)

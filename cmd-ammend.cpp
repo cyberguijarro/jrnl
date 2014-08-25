@@ -14,7 +14,7 @@ void ammend()
 {
    const string temporary = ".jrnl_edit";
    Journal journal;
-   Entry entry = journal.next();
+   Entry entry = journal.back();
    fstream file(temporary, ios_base::out|ios_base::trunc);
    vector<string> lines = entry.split();
 
@@ -28,7 +28,6 @@ void ammend()
       
       do lines.emplace_back(); while (getline(file, lines.back()));
 
-      journal.reset();
       journal.pop();
       journal.push(trim_lines(lines));
    }
