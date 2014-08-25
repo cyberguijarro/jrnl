@@ -64,6 +64,10 @@ Each entry will be displayed along with its timestamp. Use the timestamp to show
 
     jrnl "Thu Jul 31 18:09:49 2014"
 
+Last entry can also be show using:
+
+    jrnl last
+
 If the last entry bothers you, just kill it using:
 
     jrnl pop
