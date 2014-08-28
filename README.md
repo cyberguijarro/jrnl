@@ -20,6 +20,10 @@ If your compiler's STL implementation has lacky or missing std::regex support, y
 
     make USE_BOOST_REGEX=y
 
+A scons build script is also included allowing the same options:
+
+    scons CXX=g++-4.6 USE_BOOST_REGEX=y
+
 ## File format
 
 jrnl stores your journal entries in one single text file (`.jrnl`) with the following structure:
